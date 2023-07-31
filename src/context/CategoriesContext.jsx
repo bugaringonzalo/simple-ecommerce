@@ -4,9 +4,21 @@ export const CategoriesContext = createContext({});
 
 export const CategoriesProvider = ({children}) => {
     
-        useEffect(() => {
-            fetch('https://fakestoreapi.com/products')
-            .then(res=>res.json())
-            .then(json=>console.log(json))
-        })
+    const [shopData, setShopData] = useState([])
+
+    useEffect(() => {
+        fetch('https://fakestoreapi.com/products')
+        .then(res=>res.json())
+        .then(products => setShopData(products))
+    })
+
+    const value = {
+        shopData,
     }
+
+    return (
+        <CategoriesContext.Provider value={value}>
+            {children}
+        </CategoriesContext.Provider>
+    )
+}
